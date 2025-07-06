@@ -438,10 +438,8 @@
             text-align: left; /* Align text within about section */
             /* Flex properties applied in HTML */
             /* Ensure content within is scrollable */
-        }
-        #aboutSection.show {
-            opacity: 1;
-            pointer-events: auto;
+            display: none; /* Hidden by default, shown by JS */
+            pointer-events: none; /* Initially not interactive */
         }
         /* Custom scrollbar for about text */
         .custom-scrollbar::-webkit-scrollbar {
@@ -476,7 +474,7 @@
                 <h1 class="name" id="profileName">your name</h1>
                 <p class="tagline" id="profileTagline">Turning Ideas into Code</p>
                 <div class="micro-stats flex justify-center gap-2">
-                    </div>
+                </div>
             </div>
             <div class="flex flex-col items-center gap-2 w-full flex-grow">
                 <div class="contact-info text-center">
@@ -484,7 +482,7 @@
                     <p class="text-lg mt-2"><i class="fas fa-envelope mr-2"></i> <span id="emailAddress" class="cursor-pointer hover:underline"></span></p>
                 </div>
                 <div class="social-icons flex gap-6 text-3xl mt-2">
-                    </div>
+                </div>
                 <div class="action-buttons flex flex-wrap justify-center gap-4 w-full px-4 mt-2">
                     <button class="action-button" id="addToContacts"><i class="fas fa-address-book"></i> Add to Contacts</button>
                     <button class="action-button" id="shareCard"><i class="fas fa-share-alt"></i> Share Card</button>
@@ -502,8 +500,8 @@
                     <p class="text-sm text-gray-400">Switch Mode:</p>
                     <div class="flex flex-wrap justify-center gap-2">
                         <button class="action-button text-sm px-3 py-1.5" data-mode="Founder">Student</button>
-                        <button class="action-button text-sm px-3 py-1.5" data-mode="ZEN codes">ZEN codes</button>
-                        <button class="action-button text-sm px-3 py-1.5" data-mode="Elite Athlete">Elite Athlete</button>
+                        <button class="action-button text-sm px-3 py-1.5" data-mode="ZEN-codes">ZEN codes</button>
+                        <button class="action-button text-sm px-3 py-1.5" data-mode="Elite-Athlete">Elite Athlete</button>
                     </div>
                 </div>
             </div>
@@ -511,20 +509,9 @@
                 <button id="backToMainBack" class="absolute top-4 left-4 text-xl text-gray-300 hover:text-white focus:outline-none z-30">
                     <i class="fas fa-arrow-left mr-2"></i> Back
                 </button>
-                <h3 class="text-2xl font-bold text-center mb-4 mt-12">About Rajith</h3>
-                <p class="text-base text-gray-300 text-center flex-grow overflow-y-auto custom-scrollbar leading-relaxed">
-My name is Rajith Raaj, a student at SRM Vadapalani, and someone deeply passionate about the coding. What started as curiosity soon turned into obsession — I began building everything I could think of, from small utilities to powerful, full-fledged web applications. As I dove deeper, I didn’t just learn how to code — I learned how to solve problems, automate ideas, and turn imagination into interactive experiences.
-          </p>
-          <p>
-Over time, I learned  technologies like HTML, CSS, JavaScript, and modern web frameworks, and used them to build real projects that people could actually use. But more than just writing lines of code, I found true satisfaction in teaching others how to do the same. That’s what gave birth to ZEN Codes — a space where I mentor students and Non-IT Professionals simplify complex topics, and make tech feel less intimidating and more exciting.
-          </p>
-          <p>
-Through Raaj Codes, I’ve helped dozens of learners move from confusion to clarity — breaking down everything from the fundamentals of programming to advanced app-building techniques. My teaching style is simple: focus on clarity, real-world examples, and practical application. I believe that coding should feel like creating, not just studying.
-         </p>
-         <p>
-Outside the digital world, I maintain a disciplined fitness routine as a gym athlete. Training hard and eating right help me stay sharp — both in front of a screen and in life. It’s all about balance, focus, and showing up every day — whether for code, class, or the gym.
-          </p>
-                </div>
+                <div class="flex-grow overflow-y-auto custom-scrollbar text-gray-300 leading-relaxed">
+                    </div>
+            </div>
         </div>
     </div>
     <p class="text-xs text-gray-500 card-footer-watermark">
@@ -541,41 +528,84 @@ Outside the digital world, I maintain a disciplined fitness routine as a gym ath
                 phoneNumber: "+91 98400123456", // Updated to the only number
                 emailAddress: "rajithraaj.r@gmail.com", // Updated to the only email
                 microStats: ["Student-SRM Vadapalani", "Entrepreneur","Athlete"], // Updated
-  social: {
+                social: {
                     website: "https://zenora-ai.vercel.app/",
                     linkedin: "https://linkedin.com/in/rajithraaj",
                     instagram: "https://www.instagram.com/zenora.ai/",
                     whatsapp: "https://api.whatsapp.com/send/?text=ive%20used%20a%20dummy%20link%20here,%20but%20this%20link%20opens%20your%20whatsapp%20Dm%27+++-++message&type=custom_url&app_absent=0",
                     facebook: "https://www.facebook.com/zuck/"
-                }
+                },
+                about: `
+                    <h3 class="text-2xl font-bold text-center mb-4 mt-12">About Rajith - Founder</h3>
+                    <p class="text-base text-gray-300 text-center flex-grow overflow-y-auto custom-scrollbar leading-relaxed">
+                        My name is Rajith Raaj, a student at SRM Vadapalani, and someone deeply passionate about coding. What started as curiosity soon turned into obsession — I began building everything I could think of, from small utilities to powerful, full-fledged web applications. As I dove deeper, I didn’t just learn how to code — I learned how to solve problems, automate ideas, and turn imagination into interactive experiences.
+                    </p>
+                    <p>
+                        Over time, I learned technologies like HTML, CSS, JavaScript, and modern web frameworks, and used them to build real projects that people could actually use. But more than just writing lines of code, I found true satisfaction in teaching others how to do the same. That’s what gave birth to ZEN Codes — a space where I mentor students and Non-IT Professionals simplify complex topics, and make tech feel less intimidating and more exciting.
+                    </p>
+                    <p>
+                        Through Raaj Codes, I’ve helped dozens of learners move from confusion to clarity — breaking down everything from the fundamentals of programming to advanced app-building techniques. My teaching style is simple: focus on clarity, real-world examples, and practical application. I believe that coding should feel like creating, not just studying.
+                    </p>
+                    <p>
+                        Outside the digital world, I maintain a disciplined fitness routine as a gym athlete. Training hard and eating right help me stay sharp — both in front of a screen and in life. It’s all about balance, focus, and showing up every day — whether for code, class, or the gym.
+                    </p>
+                `
             },
             "ZEN-codes": {
                 name: "Raaj codes",
                 tagline: "I Teach coding to Students",
                 phoneNumber: "+91 98400123456", // Updated to the only number
                 emailAddress: "rajithraaj.r@gmail.com", // Updated to the only email
-                microStats: ["Online coaching","Project Based Learning",], // Updated with new and specific stats
+                microStats: ["Online coaching","Project Based Learning"], // Updated with new and specific stats
                 social: {
                     website: "https://zenora-ai.vercel.app/",
                     linkedin: "https://in.linkedin.com/in/rajith-raaj-09253933b",
                     whatsapp: "https://api.whatsapp.com/send/?text=ive%20used%20a%20dummy%20link%20here,%20but%20this%20link%20opens%20your%20whatsapp%20Dm%27+++-++message&type=custom_url&app_absent=0",
                     facebook: "https://www.facebook.com/zuck/",
                     instagram: "https://www.instagram.com/zenora.ai/"
-                }
+                },
+                about: `
+                    <h3 class="text-2xl font-bold text-center mb-4 mt-12">About ZEN Codes</h3>
+                    <p class="text-base text-gray-300 text-center flex-grow overflow-y-auto custom-scrollbar leading-relaxed">
+                        At ZEN Codes, our mission is to demystify programming and make it accessible to everyone, from aspiring students to non-IT professionals looking to upskill. We focus on practical, project-based learning that empowers you to build real-world applications. Our curriculum simplifies complex concepts, ensuring a clear and engaging learning experience.
+                    </p>
+                    <p>
+                        We believe that learning to code should be an exciting journey of creation, not just rote memorization. Join us to transform your ideas into functional code and unlock your potential in the digital world.
+                    </p>
+                    <p>
+                        *Specializing in Web Development (HTML, CSS, JavaScript, Frameworks)<br>
+                        *Personalized Mentorship<br>
+                        *Portfolio-building Projects
+                    </p>
+                `
             },
             "Elite-Athlete": {
                 name: "Elite-Athlete",
                 tagline: "Train|Thrive|Transform",
                 phoneNumber: "+91 98400123454", // Updated to the only number
                 emailAddress: "rajithraaj.r@gmail.com", // Updated to the only email
-                microStats: ["", "Exporting all over Tamilnadu"], // Updated with new and specific stats
+                microStats: ["Fitness Coaching", "Personal Training", "Performance Optimization"], // Updated with new and specific stats
                 social: {
                     website: "https://zenora-ai.vercel.app/",
                     linkedin: "https://in.linkedin.com/in/rajith-raaj-09253933b",
                     whatsapp: "https://api.whatsapp.com/send/?text=ive%20used%20a%20dummy%20link%20here,%20but%20this%20link%20opens%20your%20whatsapp%20Dm%27+++-++message&type=custom_url&app_absent=0",
-                        facebook: "https://www.facebook.com/zuck/",
+                    facebook: "https://www.facebook.com/zuck/",
                     instagram: "https://www.instagram.com/zenora.ai/"
-                }
+                },
+                about: `
+                    <h3 class="text-2xl font-bold text-center mb-4 mt-12">About Elite Athlete</h3>
+                    <p class="text-base text-gray-300 text-center flex-grow overflow-y-auto custom-scrollbar leading-relaxed">
+                        As an Elite Athlete, I am dedicated to pushing the boundaries of physical and mental performance. My philosophy revolves around consistent, disciplined training, optimal nutrition, and a strong mindset. I believe in fostering a holistic approach to fitness that encompasses strength, endurance, and overall well-being.
+                    </p>
+                    <p>
+                        Whether it's competitive sports or personal fitness goals, my journey is about inspiring others to train hard, thrive in their challenges, and transform into the best versions of themselves.
+                    </p>
+                    <p>
+                        *Personalized Workout Plans<br>
+                        *Nutritional Guidance<br>
+                        *Performance Coaching
+                    </p>
+                `
             }
         };
         let currentMode = 'Founder'; // Default mode
@@ -608,6 +638,8 @@ Outside the digital world, I maintain a disciplined fitness routine as a gym ath
         const aboutSection = document.getElementById('aboutSection');
         const backToMainBack = document.getElementById('backToMainBack');
         const backMainContent = document.getElementById('backMainContent'); // The wrapper for original content
+        const aboutContentContainer = document.querySelector('#aboutSection > div.flex-grow.overflow-y-auto.custom-scrollbar'); // Specific container for about text
+
 
         // --- Utility Functions ---
         // Show Toast Notification
@@ -694,7 +726,7 @@ Outside the digital world, I maintain a disciplined fitness routine as a gym ath
                     </a>
                 `;
             }
-             if (data.social.website) {
+            if (data.social.website) {
                 socialIconsContainer.innerHTML += `
                     <a href="${data.social.website}" target="_blank" rel="noopener noreferrer" class="relative group">
                         <i class="fas fa-globe"></i>
@@ -702,6 +734,10 @@ Outside the digital world, I maintain a disciplined fitness routine as a gym ath
                     </a>
                 `;
             }
+
+            // NEW: Update About Me Content
+            aboutContentContainer.innerHTML = data.about;
+
 
             currentMode = mode;
             showToast(`Switched to ${mode} mode!`);
@@ -816,7 +852,10 @@ Outside the digital world, I maintain a disciplined fitness routine as a gym ath
             if (e.target.closest(interactiveElements.map(tag => tag.toLowerCase()).join(','))) {
                 return;
             }
-            flipCard();
+            // Only flip if not currently showing the about section
+            if (aboutSection.style.display === 'none') {
+                 flipCard();
+            }
         });
         // Swipe Gestures for Flip
         let touchStartX = 0;
@@ -826,7 +865,7 @@ Outside the digital world, I maintain a disciplined fitness routine as a gym ath
         cardContainer.addEventListener('touchend', (e) => {
             const touchEndX = e.changedTouches[0].clientX;
             const deltaX = touchEndX - touchStartX;
-            if (Math.abs(deltaX) > 75) {
+            if (Math.abs(deltaX) > 75 && aboutSection.style.display === 'none') { // Only flip if not in about section
                 flipCard();
             }
         });
@@ -887,16 +926,19 @@ END:VCARD`;
         // About Me Section Visibility Control
         aboutMeButton.addEventListener('click', () => {
             gsap.to(backMainContent, {opacity: 0, duration: 0.3, onComplete: () => {
-                backMainContent.style.display = 'none';
-                aboutSection.classList.add('show');
-                gsap.fromTo(aboutSection, {opacity: 0}, {opacity: 1, duration: 0.3});
+                backMainContent.style.display = 'none'; // Hide the main content
+                aboutSection.style.display = 'flex'; // Show the about section (as flex)
+                gsap.fromTo(aboutSection, {opacity: 0}, {opacity: 1, duration: 0.3, onComplete: () => {
+                    aboutSection.style.pointerEvents = 'auto'; // Enable pointer events after showing
+                }});
             }});
         });
 
         backToMainBack.addEventListener('click', () => {
             gsap.to(aboutSection, {opacity: 0, duration: 0.3, onComplete: () => {
-                aboutSection.classList.remove('show');
-                backMainContent.style.display = 'flex'; // Restore flex display
+                aboutSection.style.display = 'none'; // Hide the about section
+                aboutSection.style.pointerEvents = 'none'; // Disable pointer events immediately
+                backMainContent.style.display = 'flex'; // Restore flex display for main content
                 gsap.fromTo(backMainContent, {opacity: 0}, {opacity: 1, duration: 0.3});
             }});
         });
