@@ -437,8 +437,8 @@
             border-radius: 2rem; /* Match card border-radius */
             text-align: left; /* Align text within about section */
             /* Flex properties applied in HTML */
-            /* Ensure content within is scrollable */
             display: none; /* Hidden by default, shown by JS */
+            opacity: 0; /* Control opacity with GSAP */
             pointer-events: none; /* Initially not interactive */
         }
         /* Custom scrollbar for about text */
@@ -852,7 +852,7 @@
             if (e.target.closest(interactiveElements.map(tag => tag.toLowerCase()).join(','))) {
                 return;
             }
-            // MODIFIED: Only flip if the about section is NOT displayed
+            // Only flip if the about section is NOT displayed
             if (aboutSection.style.display === 'none') {
                  flipCard();
             }
@@ -865,7 +865,7 @@
         cardContainer.addEventListener('touchend', (e) => {
             const touchEndX = e.changedTouches[0].clientX;
             const deltaX = touchEndX - touchStartX;
-            // MODIFIED: Only flip if the about section is NOT displayed
+            // Only flip if the about section is NOT displayed
             if (Math.abs(deltaX) > 75 && aboutSection.style.display === 'none') {
                 flipCard();
             }
@@ -924,24 +924,49 @@ END:VCARD`;
             });
         });
 
-        // About Me Section Visibility Control
+        // About Me Section Visibility Control (REVISED FOR SMOOTH TRANSITION)
         aboutMeButton.addEventListener('click', () => {
-            gsap.to(backMainContent, {opacity: 0, duration: 0.3, onComplete: () => {
-                backMainContent.style.display = 'none'; // Hide the main content
-                aboutSection.style.display = 'flex'; // Show the about section (as flex)
-                gsap.fromTo(aboutSection, {opacity: 0}, {opacity: 1, duration: 0.3, onComplete: () => {
-                    aboutSection.style.pointerEvents = 'auto'; // Enable pointer events after showing
-                }});
-            }});
+            gsap.to(backMainContent, {
+                opacity: 0,
+                duration: 0.4,
+                onComplete: () => {
+                    backMainContent.style.display = 'none';
+                    aboutSection.style.display = 'flex';
+                    gsap.fromTo(aboutSection,
+                        { opacity: 0 },
+                        {
+                            opacity: 1,
+                            duration: 0.4,
+                            onComplete: () => {
+                                aboutSection.style.pointerEvents = 'auto';
+                            }
+                        }
+                    );
+                }
+            });
         });
 
         backToMainBack.addEventListener('click', () => {
-            gsap.to(aboutSection, {opacity: 0, duration: 0.3, onComplete: () => {
-                aboutSection.style.display = 'none'; // Hide the about section
-                aboutSection.style.pointerEvents = 'none'; // Disable pointer events immediately
-                backMainContent.style.display = 'flex'; // Restore flex display for main content
-                gsap.fromTo(backMainContent, {opacity: 0}, {opacity: 1, duration: 0.3});
-            }});
+            gsap.to(aboutSection, {
+                opacity: 0,
+                duration: 0.4,
+                onComplete: () => {
+                    aboutSection.style.display = 'none';
+                    aboutSection.style.pointerEvents = 'none';
+
+                    backMainContent.style.display = 'flex';
+                    gsap.fromTo(backMainContent,
+                        { opacity: 0 },
+                        {
+                            opacity: 1,
+                            duration: 0.4,
+                            onComplete: () => {
+                                flipCard();
+                            }
+                        }
+                    );
+                }
+            });
         });
 
         // --- Initialization ---
