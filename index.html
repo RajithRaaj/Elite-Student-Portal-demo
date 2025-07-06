@@ -752,13 +752,22 @@
                 }
             });
         }
-        // Card Flip Logic
+        // Card Flip Logic (REVISED to handle About Me visibility)
         function flipCard() {
             isFlipped = !isFlipped;
             if (isFlipped) {
                 cardContainer.classList.add('flipped');
+                // When flipping to the back, ensure main back content is visible initially
+                // and about section is hidden, just in case
+                gsap.set(backMainContent, { opacity: 1, display: 'flex' });
+                gsap.set(aboutSection, { opacity: 0, display: 'none', pointerEvents: 'none' });
+
             } else {
                 cardContainer.classList.remove('flipped');
+                // When flipping to the front, ensure about section is hidden
+                // and back main content is visible (so it's ready for next flip to back)
+                gsap.set(aboutSection, { opacity: 0, display: 'none', pointerEvents: 'none' });
+                gsap.set(backMainContent, { opacity: 1, display: 'flex' });
             }
             triggerHapticFeedback();
         }
@@ -846,29 +855,40 @@
             themeToggle.innerHTML = `<i class="fas ${isLight ? 'fa-sun' : 'fa-moon'} text-xl text-white"></i>`;
             localStorage.setItem('theme', isLight ? 'light' : 'dark');
         });
-        // Card Flip on Click/Tap
+        // Card Flip on Click/Tap (SIMPLIFIED)
         cardContainer.addEventListener('click', (e) => {
-            const interactiveElements = ['A', 'BUTTON', 'INPUT', 'SPAN', 'P', 'IMG', 'H1', 'H2', 'H3', 'DIV']; // Added common interactive/content elements to prevent accidental flips
+            const interactiveElements = ['A', 'BUTTON', 'INPUT', 'SPAN', 'P', 'IMG', 'H1', 'H2', 'H3', 'DIV'];
+            // Check if the clicked element or any of its parents is an interactive element
             if (e.target.closest(interactiveElements.map(tag => tag.toLowerCase()).join(','))) {
-                return;
+                return; // Do not flip if an interactive element was clicked
             }
-            // Only flip if the about section is NOT displayed
-            if (aboutSection.style.display === 'none') {
-                 flipCard();
-            }
+            // If it's the card background itself (not a button/link), then flip
+            flipCard();
         });
-        // Swipe Gestures for Flip
+
+        // Swipe Gestures for Flip (SIMPLIFIED)
         let touchStartX = 0;
         cardContainer.addEventListener('touchstart', (e) => {
+            // Prevent flip if a button or link is touched initially
+            const interactiveElements = ['A', 'BUTTON', 'INPUT'];
+            if (e.target.closest(interactiveElements.map(tag => tag.toLowerCase()).join(','))) {
+                touchStartX = 0; // Reset to prevent flip if interactive element was touched
+                return;
+            }
             touchStartX = e.touches[0].clientX;
         }, { passive: true });
+
         cardContainer.addEventListener('touchend', (e) => {
+            if (touchStartX === 0) return; // If an interactive element was touched, don't flip
+
             const touchEndX = e.changedTouches[0].clientX;
             const deltaX = touchEndX - touchStartX;
-            // Only flip if the about section is NOT displayed
-            if (Math.abs(deltaX) > 75 && aboutSection.style.display === 'none') {
+
+            // Adjust the threshold for swipe sensitivity if needed
+            if (Math.abs(deltaX) > 75) { // Swipe threshold
                 flipCard();
             }
+            touchStartX = 0; // Reset for next swipe
         });
         // Tap-to-copy for Phone/Email
         phoneNumberSpan.addEventListener('click', () => copyToClipboard(phoneNumberSpan.textContent.trim()));
@@ -961,7 +981,7 @@ END:VCARD`;
                             opacity: 1,
                             duration: 0.4,
                             onComplete: () => {
-                                flipCard();
+                                flipCard(); // This will now reset back content before flipping
                             }
                         }
                     );
