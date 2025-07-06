@@ -852,7 +852,7 @@
             if (e.target.closest(interactiveElements.map(tag => tag.toLowerCase()).join(','))) {
                 return;
             }
-            // Only flip if not currently showing the about section
+            // MODIFIED: Only flip if the about section is NOT displayed
             if (aboutSection.style.display === 'none') {
                  flipCard();
             }
@@ -865,7 +865,8 @@
         cardContainer.addEventListener('touchend', (e) => {
             const touchEndX = e.changedTouches[0].clientX;
             const deltaX = touchEndX - touchStartX;
-            if (Math.abs(deltaX) > 75 && aboutSection.style.display === 'none') { // Only flip if not in about section
+            // MODIFIED: Only flip if the about section is NOT displayed
+            if (Math.abs(deltaX) > 75 && aboutSection.style.display === 'none') {
                 flipCard();
             }
         });
